@@ -1,0 +1,264 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>      // Incluindo bibliotecas.
+#include <locale.h>
+
+int main (void)
+{
+
+    setlocale(LC_ALL, "Portuguese"); // Adicionado biblicoteca para lingua portuguesa.
+
+
+
+    struct // Struct para cadastro do cliente.
+    {
+        char nome[30];
+        char telefone[15];
+        char cpf[15];
+    } cadastro_cliente;
+
+
+    struct // Struct para cadastro do veículo.
+    {
+        char fabricante[15];
+        int ano_fabricacao;
+        float kilometragem;
+        float motorizacao;
+        char modelo_veiculo[20];
+        char placa[9];
+    } cadastro_veiculo;
+
+
+    struct // Struct para dados da ordem de serviço.
+    {
+        char pecas[30];
+        float valor_peca;
+        float valor_mao_de_obra;
+        float tempo_servico;
+    } ordem_servico;
+
+
+
+    printf("    ______CADASTRO DO CLIENTE_______\n\n");
+
+    // Iniciando a leitura de dados do cliente.
+
+le_nome: // Rótulo utilizado para o comando goto.
+    do
+    {
+        printf("\n  Informe o nome do cliente: ");
+        fgets(cadastro_cliente.nome, 30, stdin); // Armazenando informação que o usuário informou.
+    }
+    while(cadastro_cliente.nome == 0); // Laço de repetição.
+
+    if(isalpha(cadastro_cliente.nome[0])== 0) // Verificando se o que  usuário informou contem caracteres ou valores numéricos.
+    {
+        printf("\n  Ops! Me parece que você informou caracteres ou um valor numérico. Tente novamente apenas com letras!\n");
+        goto le_nome; // Utilizado goto para retornar ao rótulo determinado.
+    }
+
+le_numero: // Rótulo utilizado para o comando goto.
+    do
+    {
+        printf("\n  Informe o telefone do cliente: ");
+        scanf("%s", &cadastro_cliente.telefone); // Armazenando informação que o usuário informou.
+    }
+    while(cadastro_cliente.telefone == 0); // Laço de repetição.
+
+    if(isdigit(cadastro_cliente.telefone[0]) == 0) // Verificando se o que  usuário informou contem caracteres ou letras.
+    {
+        printf("\n  Ops! Me parece que você informou caracteres ou letras. Tente novamente apenas com números!\n");
+        goto le_numero; // Utilizado goto para retornar ao rótulo determinado.
+    }
+
+le_cpf: // Rótulo utilizado para o comando goto.
+    do
+    {
+        printf("\n  Informe o CPF do cliente: ");
+        scanf("%s", &cadastro_cliente.cpf); // Armazenando informação que o usuário informou.
+    }
+    while(cadastro_cliente.cpf == 0); // Laço de repetição.
+
+    if(isdigit(cadastro_cliente.cpf[0]) == 0) // Verificando se o que  usuário informou contem caracteres ou letras.
+    {
+        printf("\n  Ops! Me parece que você informou caracteres ou letras. Tente novamente apenas com números!\n");
+        goto le_cpf; // Utilizado goto para retornar ao rótulo determinado.
+    }
+    fflush(stdin);
+//______________________________________________________________________________________________________________________________________
+
+// Iniciando a leitura de dados do veíulo.
+
+    printf("\n\n    _______CADASTRO DO VEÍCULO_______\n\n");
+
+le_veiculo: // Rótulo utilizado para o comando goto.
+    do
+    {
+        printf("\n  Informe a marca do veíulo: ");
+        fgets(cadastro_veiculo.fabricante, 15, stdin); // Armazenando informação que o usuário informou.
+    }
+    while(cadastro_veiculo.fabricante == 0); // Laço de repetição.
+
+    if(isalpha(cadastro_veiculo.fabricante[0]) == 0) // Verificando se o que  usuário informou contem caracteres ou valores numéricos.
+    {
+        printf("\n  Ops! Me parece que você informou caracteres ou um valor numérico. Tente novamente apenas com letras!\n");
+        goto le_veiculo; // Utilizado goto para retornar ao rótulo determinado.
+    }
+
+    printf("\n  Informe o modelo do veículo: ");
+    fgets(cadastro_veiculo.modelo_veiculo, 20, stdin);
+
+le_fabricacao: // Rótulo utilizado para o comando goto.
+    do
+    {
+        printf("\n  Informe o ano de fabricacao do veículo: ");
+        scanf("%d", &cadastro_veiculo.ano_fabricacao); // Armazenando informação que o usuário informou.
+    }
+    while((cadastro_veiculo.ano_fabricacao < 1900) && (cadastro_veiculo.ano_fabricacao > 2022)); // Laço de repetição.
+
+    if(cadastro_veiculo.ano_fabricacao < 1900 || cadastro_veiculo.ano_fabricacao > 2022) // Verificando se o ano do está entre 1900 e 2022.
+    {
+        printf("\n  Ano de fabricação não confere!\n"); // Informando que o ano do veículo não está de acordo.
+        goto le_fabricacao; // Utilizado goto para retornar ao rótulo determinado.
+    }
+
+le_km: // Rótulo utilizado para o comando goto.
+    do
+    {
+        printf("\n  Informe a kilometragem do veículo: ");
+        scanf("%f", &cadastro_veiculo.kilometragem); // Armazenando informação que o usuário informou.
+    }
+    while(cadastro_veiculo.kilometragem == 0); // Laço de repetição.
+
+    if(cadastro_veiculo.kilometragem < 1 ) // Verificando se a kilometragem do veículo não está menor ou igual a zero.
+    {
+        printf("\n  Kilometragem informada não confere!\n"); // Informando que a kilometragem do veículo não está de acordo.
+        goto le_km; // Utilizado goto para retornar ao rótulo determinado.
+    }
+
+le_motorizacao:  // Rótulo utilizado para o comando goto.
+    do
+    {
+        printf("\n  Informe a motorizacao do veículo: ");
+        scanf("%f", &cadastro_veiculo.motorizacao); // Armazenando informação que o usuário informou.
+    }
+    while(cadastro_veiculo.motorizacao == 0); // Laço de repetição.
+
+    if(cadastro_veiculo.motorizacao < 1) // Verificando se a motorização do veículo não está menor que 1.0.
+    {
+        printf("\n  Motorização informada não confere!\n"); // Informando que a motorização do veículo não está de acordo.
+        goto le_motorizacao; // Utilizado goto para retornar ao rótulo determinado.
+    }
+    fflush(stdin);
+
+    printf("\n  Informe a placa do veículo: ");
+    scanf("%s", &cadastro_veiculo.placa); // Armazenando informação que o usuário informou.
+    fflush(stdin);
+
+//________________________________________________________________________________________________________________________________________________
+
+// Iniciando a leitura de dados do veíulo.
+// Ler dados da ordem de serviço.
+
+    printf("\n\n    _______ORDEM DE SERVICO_______\n\n");
+
+//Função calcular peças.
+    int continuar=0;
+    int quantidade_pecas=0;
+    int i=0;
+
+    while(continuar == 0) // Laço de repetição para usuário informar mais de uma peça e mais de um valor.
+    {
+le_item: // Rótulo utilizado para o comando goto.
+        do
+        {
+            printf("\n  Informe o item desejado: ");
+            fgets(ordem_servico.pecas, 30, stdin);  // Armazenando informação que o usuário informou.
+        }
+        while(ordem_servico.pecas == 0); //Laço de repetição.
+
+        if(isalpha(ordem_servico.pecas[0]) == 0) // Verificando se o que  usuário informou contem caracteres ou valores numéricos.
+        {
+            printf("\n  Ops! Me parece que você informou caracteres ou um valor númerico. Tente novamente apenas com letras!\n");
+            goto le_item; // Utilizado goto para retornar ao rótulo determinado.
+        }
+
+le_valor: // Rótulo utilizado para o comando goto.
+        do
+        {
+            printf("\n  Informe o valor da peca: ");
+            scanf("%f", &ordem_servico.valor_peca); // Armazenando informação que o usuário informou.
+        }
+        while(ordem_servico.valor_peca == 0); //Laço de repetição.
+
+        if(ordem_servico.valor_peca < 1) // Verificando se o valor da peça não está menor ou igual a zero.
+        {
+            printf("\n  Valor da peça não confere!\n"); // Informando que o valor da peça não está de acordo.
+            goto le_valor; // Utilizado goto para retornar ao rótulo determinado.
+        }
+
+        printf("\n\n    Deseja adicionar mais itens?\n      0 para SIM.\n      1 para NÃO.\n\n  "); // Informando para o usuário se ele deseja adicionar outra peça e outro valor ao orçamento.
+        scanf("%d", &continuar);
+        fflush(stdin);
+    }
+
+le_mao_de_obra: // Rótulo utilizado para o comando goto.
+    do
+    {
+        printf("\n  Informe o valor da mão de obra: ");
+        scanf("%f", &ordem_servico.valor_mao_de_obra); // Armazenando informação que o usuário informou.
+    }
+    while(ordem_servico.valor_mao_de_obra == 0); //Laço de repetição.
+
+    if(ordem_servico.valor_mao_de_obra < 1) // Verificando se o valor da mão de obra não está menor ou igual a zero.
+    {
+        printf("\n  Valor da mão de obra não confere!\n"); // Informando que o valor da mão de obra não está de acordo.
+        goto le_mao_de_obra; // Utilizado goto para retornar ao rótulo determinado.
+    }
+
+le_tempo_servico: // Rótulo utilizado para o comando goto.
+    do
+    {
+        printf("\n  Informe em horas o tempo de serviço: ");
+        scanf("%f", &ordem_servico.tempo_servico); // Armazenando informação que o usuário informou.
+    }
+    while(ordem_servico.tempo_servico == 0); //Laço de repetição.
+
+    if(ordem_servico.tempo_servico < 1) // Verificando se o tempo de serviço não está menor ou igual a zero.
+    {
+        printf("\n  Tempo de serviço não confere!\n"); // Informando que o tempo de serviço não está de acordo.
+        goto le_tempo_servico; // Utilizado goto para retornar ao rótulo determinado.
+    }
+
+ // Saída dos dados do cliente.
+
+    printf("\n\n    _______DADOS DO CLIENTE_______\n\n");
+
+    printf("    Nome: %s \n", cadastro_cliente.nome);
+    printf("    Telefone: %s \n\n", cadastro_cliente.telefone);
+    printf("    CPF: %s \n", cadastro_cliente.cpf);
+
+
+ // Saída dos dados do veículo
+
+    printf("\n\n    _______DADOS DO VEÍCULO_______\n\n\n");
+
+    printf("    Fabricante: %s \n", cadastro_veiculo.fabricante);
+    printf("    Modelo: %s \n", cadastro_veiculo.modelo_veiculo);
+    printf("    Ano de fabricacao: %d \n\n", cadastro_veiculo.ano_fabricacao);
+    printf("    Kilometragem: %.0f \n\n", cadastro_veiculo.kilometragem);
+    printf("    Motorizacao: %.1f \n\n", cadastro_veiculo.motorizacao);
+    printf("    Placa: %s \n\n", cadastro_veiculo.placa);
+
+
+ // Saídas ordem de serviço.
+
+    float nota_final;
+    nota_final = ordem_servico.tempo_servico * ordem_servico.valor_mao_de_obra + ordem_servico.valor_peca; // Função para calcular valor total da ordem de serviço.
+
+
+    printf("\n\n    _______VALORES TOTAIS DE SERVICO_______\n\n\n");
+    printf("    Valor pecas: R$%.2f \n", ordem_servico.valor_peca);
+    printf("    Valor total da mao de obra: R$%.2f \n", ordem_servico.tempo_servico * ordem_servico.valor_mao_de_obra);
+    printf("|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|-VALOR TOTAL DA NOTA: R$%.2f-|X|X|X|X|X|X|X|\n\n\n", nota_final);
+}
